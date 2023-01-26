@@ -5,7 +5,7 @@ namespace SampleWebSite.Controllers
 {
     public class ContactsController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Check()
         {
             return View();
         }
@@ -15,11 +15,17 @@ namespace SampleWebSite.Controllers
         {
             if (ModelState.IsValid)
             {
-                return Redirect("/");
+                return View("ShowInputData", contact);
             }
 
-            return View("Index");
-            
+            return View();
         }
+
+        [HttpPost]
+        public IActionResult ShowInputData(Contact contact)
+        {
+            return View();
+        }
+
     }
 }

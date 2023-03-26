@@ -5,7 +5,8 @@ namespace EFCoreSample.src
     internal class ApplicationContext : DbContext
     {
         public DbSet<User> Users { get; set; } = null!;
-
+        //public DbSet<User> Users => Set<User>();
+        
         public ApplicationContext() => Database.EnsureCreated();
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

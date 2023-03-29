@@ -4,7 +4,7 @@ namespace EFCoreSample.src
 {
     internal class ApplicationContext : DbContext
     {
-        private string? connectionString;
+        private readonly string? connectionString;
 
         public DbSet<User> Users { get; set; } = null!;
         //public DbSet<User> Users => Set<User>();

@@ -4,15 +4,20 @@ namespace EFCoreSample.src
 {
     internal class ApplicationContext : DbContext
     {
+        private string? connectionString;
+
         public DbSet<User> Users { get; set; } = null!;
         //public DbSet<User> Users => Set<User>();
-        
-        public ApplicationContext() => Database.EnsureCreated();
+
+        public ApplicationContext(string connectionString)
+        {
+            this.connectionString = connectionString;
+            Database.EnsureCreated();
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFCoreSample;Trusted_Connection=True;");
-            optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=EFCoreSample;Trusted_Connection=True;TrustServerCertificate=true;");
+            optionsBuilder.UseSqlServer(connectionString);
         }
 
     }

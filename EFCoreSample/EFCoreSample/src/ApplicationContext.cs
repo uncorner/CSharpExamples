@@ -4,6 +4,7 @@ namespace EFCoreSample.src
 {
     internal class ApplicationContext : DbContext
     {
+        private readonly StreamWriter logStream = new("efcore.log", true);
         private readonly string? connectionString;
 
         public DbSet<User> Users { get; set; } = null!;
@@ -18,6 +19,19 @@ namespace EFCoreSample.src
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(connectionString);
+            optionsBuilder.LogTo(logStream.WriteLine);
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+            logStream.Dispose();
+        }
+
+        public override async ValueTask DisposeAsync()
+        {
+            await base.DisposeAsync();
+            await logStream.DisposeAsync();
         }
 
     }

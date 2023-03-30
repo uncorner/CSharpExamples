@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace EFCoreSample.src
 {
@@ -19,7 +20,7 @@ namespace EFCoreSample.src
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(connectionString);
-            optionsBuilder.LogTo(logStream.WriteLine);
+            optionsBuilder.LogTo(logStream.WriteLine, new [] { RelationalEventId.CommandExecuted });
         }
 
         public override void Dispose()

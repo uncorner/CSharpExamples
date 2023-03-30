@@ -8,10 +8,14 @@ internal class Program
     private static void Main(string[] args)
     {
         configuration = GetAppSettingsFile();
-        
+
+        //DatabaseEnsureDeleted();
+
         using (var dbContext = CreateDBContext())
         {
-            dbContext.Database.EnsureDeleted();
+            var users = dbContext.Users.ToList();
+            dbContext.Users.RemoveRange(users);
+            dbContext.SaveChanges();
         }
 
         using (var dbContext = CreateDBContext())
@@ -32,6 +36,12 @@ internal class Program
                 Console.WriteLine($"{u.Id}.{u.Name} - {u.Age}");
             }
         }
+    }
+
+    private static void DatabaseEnsureDeleted()
+    {
+        using var dbContext = CreateDBContext();
+        dbContext.Database.EnsureDeleted();
     }
 
     private static ApplicationContext CreateDBContext()

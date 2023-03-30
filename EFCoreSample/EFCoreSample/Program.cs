@@ -1,24 +1,18 @@
 ﻿using EFCoreSample.src;
-using Microsoft.Extensions.Configuration;
 
 internal class Program
 {
-    private static IConfiguration configuration = null!;
 
     private static void Main(string[] args)
     {
-        configuration = GetAppSettingsFile();
-
-        //DatabaseEnsureDeleted();
-
-        using (var dbContext = CreateDBContext())
+        using (var dbContext = CreateAppDbContext())
         {
             var users = dbContext.Users.ToList();
             dbContext.Users.RemoveRange(users);
             dbContext.SaveChanges();
         }
 
-        using (var dbContext = CreateDBContext())
+        using (var dbContext = CreateAppDbContext())
         {
             var user1 = new User { Name = "Tom", Age = 33 };
             var user2 = new User { Name = "Alice", Age = 26 };
@@ -27,7 +21,7 @@ internal class Program
             dbContext.SaveChanges();
         }
 
-        using (var dbContext = CreateDBContext())
+        using (var dbContext = CreateAppDbContext())
         {
             var users = dbContext.Users.ToList();
             Console.WriteLine("Users list:");
@@ -38,28 +32,7 @@ internal class Program
         }
     }
 
-    private static void DatabaseEnsureDeleted()
-    {
-        using var dbContext = CreateDBContext();
-        dbContext.Database.EnsureDeleted();
-    }
+    private static AppDbContext CreateAppDbContext() => new(true);
 
-    private static ApplicationContext CreateDBContext()
-    {
-        var connString = configuration.GetConnectionString("Default");
-        if (connString is null)
-        {
-            throw new NullReferenceException("Default connection string is empty");
-        }
 
-        return new(connString);
-    }
-
-    private static IConfiguration GetAppSettingsFile()
-    {
-        var builder = new ConfigurationBuilder()
-                             .SetBasePath(Directory.GetCurrentDirectory())
-                             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-        return builder.Build();
-    }
 }

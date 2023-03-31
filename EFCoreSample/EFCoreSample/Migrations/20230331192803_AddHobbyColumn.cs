@@ -13,7 +13,7 @@ namespace EFCoreSample.Migrations
             migrationBuilder.AddColumn<string>(
                 name: "Hobby",
                 table: "Users",
-                type: "nvarchar(max)",
+                type: "nvarchar(50)",
                 nullable: true);
         }
 

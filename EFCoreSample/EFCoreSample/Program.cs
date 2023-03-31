@@ -14,8 +14,8 @@ internal class Program
 
         using (var dbContext = CreateAppDbContext())
         {
-            var user1 = new User { Name = "Tom", Age = 33 };
-            var user2 = new User { Name = "Alice", Age = 26 };
+            var user1 = new User { Name = "Tom", Age = 33, Hobby = "TV shows" };
+            var user2 = new User { Name = "Alice", Age = 26, Hobby = "fishing" };
 
             dbContext.Users.AddRange(user1, user2);
             dbContext.SaveChanges();
@@ -25,14 +25,15 @@ internal class Program
         {
             var users = dbContext.Users.ToList();
             Console.WriteLine("Users list:");
-            foreach (User u in users)
+
+            foreach (var user in users)
             {
-                Console.WriteLine($"{u.Id}.{u.Name} - {u.Age}");
+                Console.WriteLine($"{user.Id}.{user.Name} - {user.Age} - {user.Hobby}");
             }
         }
     }
 
-    private static AppDbContext CreateAppDbContext() => new(true);
+    private static ApplicationDbContext CreateAppDbContext() => new(true);
 
 
 }

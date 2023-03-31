@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCoreSample.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230330193837_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230331192803_AddHobbyColumn")]
+    partial class AddHobbyColumn
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,6 +34,9 @@ namespace EFCoreSample.Migrations
 
                     b.Property<int>("Age")
                         .HasColumnType("int");
+
+                    b.Property<string>("Hobby")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");

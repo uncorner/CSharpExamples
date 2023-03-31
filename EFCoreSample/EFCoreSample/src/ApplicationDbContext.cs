@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace EFCoreSample.src
 {
-    internal class AppDbContext : DbContext
+    internal class ApplicationDbContext : DbContext
     {
         private readonly StreamWriter? logStream;
         private readonly string connectionString;
@@ -12,11 +12,11 @@ namespace EFCoreSample.src
         internal DbSet<User> Users { get; set; } = null!;
         //public DbSet<User> Users => Set<User>();
 
-        public AppDbContext() : this(false)
+        public ApplicationDbContext() : this(false)
         {
         }
 
-        public AppDbContext(bool isLogging, string? connectionString = null)
+        public ApplicationDbContext(bool isLogging, string? connectionString = null)
         {
             if (connectionString is not null)
             {

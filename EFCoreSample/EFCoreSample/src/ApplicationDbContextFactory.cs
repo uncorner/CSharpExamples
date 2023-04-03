@@ -4,12 +4,19 @@ using Microsoft.Extensions.Configuration;
 
 namespace EFCoreSample.src
 {
-    internal static class ApplicationDbContextFactory
+    internal class ApplicationDbContextFactory
     {
-        public static ApplicationDbContext Create(bool isLogging = true)
+        private readonly Lazy<IConfiguration> configuration = 
+            new Lazy<IConfiguration>(AppConfiguration.GetConfiguration());
+        private readonly bool isLogging;
+
+        public ApplicationDbContextFactory(bool isLogging = true) {
+            this.isLogging = isLogging;
+        }
+
+        public ApplicationDbContext Create()
         {
-            var configuration = AppConfiguration.GetConfiguration();
-            var connectionString = configuration.GetConnectionString("Default")
+            var connectionString = configuration.Value.GetConnectionString("Default")
                 ?? throw new NullReferenceException("Cannot get connection string");
 
             DbContextOptionsBuilder<ApplicationDbContext> optionsBuilder = new();

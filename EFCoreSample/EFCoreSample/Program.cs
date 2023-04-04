@@ -1,4 +1,5 @@
 ﻿using EFCoreSample.src;
+using Microsoft.EntityFrameworkCore;
 
 internal class Program
 {
@@ -9,9 +10,7 @@ internal class Program
 
         using (var dbContext = dbContextFactory.Create())
         {
-            var users = dbContext.Users.ToList();
-            dbContext.Users.RemoveRange(users);
-            dbContext.SaveChanges();
+            dbContext.Users.ExecuteDelete();
         }
 
         using (var dbContext = dbContextFactory.Create())

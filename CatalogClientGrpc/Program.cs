@@ -9,8 +9,8 @@ var client = new Translator.TranslatorClient(channel);
 
 foreach (var word in words)
 {
-    Request request = new Request { Word = word };
-    Response response = await client.TranslateAsync(request);
+    var request = new Request { Word = word };
+    var response = await client.TranslateAsync(request);
     Console.WriteLine($"{response.Word} : {response.Translation}");
 }
 

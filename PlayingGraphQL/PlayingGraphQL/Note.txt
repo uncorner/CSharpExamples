@@ -1,0 +1,23 @@
+
+mutation {
+  book(title: "Book A1", chapters: 4, pages: 100, author: "Anchor A1")
+  {
+    id
+    chapters
+    title 
+    author {
+      name
+    }
+  }  
+}
+
+=============================
+
+{
+  books{
+    title
+    author {
+      name
+    }
+  }
+}

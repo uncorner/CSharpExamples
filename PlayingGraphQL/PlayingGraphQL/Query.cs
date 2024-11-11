@@ -9,6 +9,6 @@ public class Query
         dbContext.Books.Include(x => x.Author).ToList(); 
     
     // По соглашению GetBook() будет объявлен как book() в типе запроса.
-    public Book? GetBook([Service] BookDbContext dbContext, int id) =>
-        dbContext.Books.FirstOrDefault(x => x.Id == id);
+    public Book GetBook([Service] BookDbContext dbContext, int id) =>
+        dbContext.Books.First(x => x.Id == id);
 }
